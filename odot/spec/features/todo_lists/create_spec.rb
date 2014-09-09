@@ -55,5 +55,16 @@ describe "Creating todo lists" do
 		visit "/todo_lists"
 		expect(page).to_not have_content("Grocery list")
 	end
+	
+	it "displays an error when the todo list has no description" do
+		expect(TodoList.count).to eq(0)
+
+		create_todo_list title: "Grocery list", description: "Food"
+		expect(page).to have_content("error")
+		expect(TodoList.count).to eq(0)
+		visit "/todo_lists"
+		expect(page).to_not have_content("Grocery list")
+	end
+
 
 end
